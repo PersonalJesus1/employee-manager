@@ -1,15 +1,20 @@
-package Lessons.Employee_manager;
+package Lessons.Employee_manager.positions;
+
+import Lessons.Employee_manager.departments.Department;
 
 import java.math.BigDecimal;
 
-public interface Position {
+public  interface Position {
     String getName();
 
     Department getDepartment();
 
-    BigDecimal getMinSalary();
+     BigDecimal getMinSalary();
 
     BigDecimal getMaxSalary();
+
+    boolean validateSalary(int newSalary);
+
 }
 
 

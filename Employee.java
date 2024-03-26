@@ -1,5 +1,7 @@
 package Lessons.Employee_manager;
 
+import Lessons.Employee_manager.positions.Position;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -7,15 +9,15 @@ public class Employee {
     private String name;
     private String surname;
     private final int ID;
-    private Position job_title;
+    private Position jobTitle;
     private BigDecimal salary;
     private LocalDate lastChangeDate;
 
-    public Employee(String name, String surname, int ID, Position job_title, BigDecimal salary, LocalDate lastChangeDate) {
+    public Employee(String name, String surname, int ID, Position jobTitle, BigDecimal salary, LocalDate lastChangeDate) {
         this.name = name;
         this.surname = surname;
-        this.ID  = ID;
-        this.job_title = job_title;
+        this.ID = ID;
+        this.jobTitle = jobTitle;
         this.salary = salary;
         this.lastChangeDate = lastChangeDate;
     }
@@ -24,7 +26,10 @@ public class Employee {
         return name;
     }
 
-    public String getSurname() {
+    public String
+
+
+    getSurname() {
         return surname;
     }
 
@@ -32,8 +37,8 @@ public class Employee {
         return ID;
     }
 
-    public Position getJob_title() {
-        return job_title;
+    public Position getJobTitle() {
+        return jobTitle;
     }
 
     public BigDecimal getSalary() {
@@ -52,8 +57,8 @@ public class Employee {
         this.surname = surname;
     }
 
-    public void setJob_title(Position job_title) {
-        this.job_title = job_title;
+    public void setJobTitle(Position jobTitle) {
+        this.jobTitle = jobTitle;
     }
 
     public void setSalary(BigDecimal salary) {
@@ -70,7 +75,7 @@ public class Employee {
                 "name: " + name +
                 " surname: " + surname +
                 ", id: " + ID +
-                ", job_title: " + job_title.getName() +
+                ", job_title: " + jobTitle.getName() +
                 ", salary: " + salary +
                 ", lastChangeDate " + lastChangeDate +
                 " }";

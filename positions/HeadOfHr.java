@@ -4,30 +4,32 @@ import Lessons.Employee_manager.departments.Department;
 
 import java.math.BigDecimal;
 
-public class JuniorDeveloper implements Position {
+public class HeadOfHr implements Position {
+
 
     @Override
     public String getName() {
-        return "JuniorDeveloper";
+        return "Head Of HR";
     }
 
     @Override
     public Department getDepartment() {
-        return Department.DEVELOPMENT;
+        return Department.HR;
     }
 
     @Override
     public  BigDecimal getMinSalary() {
-        return new BigDecimal(400);
+        return new BigDecimal(800);
     }
 
     @Override
     public BigDecimal getMaxSalary() {
-        return new BigDecimal(1000);
+        return new BigDecimal(1700);
     }
 
     @Override
     public boolean validateSalary(int newSalary) {
-        return newSalary>= 400 && newSalary <= 1000;
+        return newSalary>= 800 && newSalary <= 1700;
     }
 }
+

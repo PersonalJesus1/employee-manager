@@ -1,12 +1,22 @@
-package Lessons.Employee_manager;
+package Lessons.Employee_manager.positions;
+
+import Lessons.Employee_manager.departments.Department;
 
 import java.math.BigDecimal;
 
 public class HeadOfMarketing implements Position {
-    String title;
+    private String title;
 
-    HeadOfMarketing(){
+    public HeadOfMarketing(){
         title=getName();
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     @Override
@@ -20,7 +30,7 @@ public class HeadOfMarketing implements Position {
     }
 
     @Override
-    public BigDecimal getMinSalary() {
+    public  BigDecimal getMinSalary() {
         return new BigDecimal(1000);
     }
 
@@ -28,6 +38,7 @@ public class HeadOfMarketing implements Position {
     public BigDecimal getMaxSalary() {
         return new BigDecimal(2000);
     }
+
     @Override
     public boolean validateSalary(int newSalary) {
         return newSalary>= 1000 && newSalary <= 2000;

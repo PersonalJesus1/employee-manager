@@ -1,4 +1,6 @@
-package Lessons.Employee_manager;
+package Lessons.Employee_manager.positions;
+
+import Lessons.Employee_manager.departments.Department;
 
 import java.math.BigDecimal;
 
@@ -15,12 +17,17 @@ public class SeniorDeveloper implements Position {
     }
 
     @Override
-    public BigDecimal getMinSalary() {
+    public  BigDecimal getMinSalary() {
         return new BigDecimal(1800);
     }
 
     @Override
     public BigDecimal getMaxSalary() {
         return new BigDecimal(4000);
+    }
+
+    @Override
+    public boolean validateSalary(int newSalary) {
+        return newSalary >= 1800 && newSalary <= 4000;
     }
 }

@@ -28,4 +28,8 @@ public class HeadOfMarketing implements Position {
     public BigDecimal getMaxSalary() {
         return new BigDecimal(2000);
     }
+    @Override
+    public boolean validateSalary(int newSalary) {
+        return newSalary>= 1000 && newSalary <= 2000;
+    }
 }

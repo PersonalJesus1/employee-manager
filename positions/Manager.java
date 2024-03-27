@@ -26,8 +26,5 @@ public class Manager implements Position {
         return new BigDecimal(800);
     }
 
-    @Override
-    public boolean validateSalary(int newSalary) {
-        return newSalary>=400 && newSalary <= 800;
-    }
+    
 }

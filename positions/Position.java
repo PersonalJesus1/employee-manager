@@ -13,7 +13,10 @@ public  interface Position {
 
     BigDecimal getMaxSalary();
 
-    boolean validateSalary(int newSalary);
+    default boolean validateSalary(int newSalary){
+
+        return (getMinSalary().intValue()) <= newSalary && getMaxSalary().intValue() >= newSalary;
+    }
 
 }
 

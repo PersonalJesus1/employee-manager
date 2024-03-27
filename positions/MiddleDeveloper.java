@@ -28,8 +28,5 @@ public class MiddleDeveloper implements Position {
     public BigDecimal getMaxSalary() {
         return new BigDecimal(2000);
     }
-    @Override
-    public boolean validateSalary(int newSalary) {
-        return newSalary >= 800 && newSalary <= 2000;
-    }
+    
 }

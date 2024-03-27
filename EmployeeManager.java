@@ -65,6 +65,75 @@ public class EmployeeManager {
         } while (!isChanged);
     }
 
+    //Ask Ordinal number of employee, change department
+    private static void choiceEmployeeToChangeDepartment() {
+
+        printListOfEmployee();
+        boolean isEmployeeNumber = false;
+        do {
+            System.out.println("Write ordinal number of employee from the list ");
+            try {
+                int choiceEmployee = Integer.parseInt(READER.readLine());
+                int indexOfNum = indexOfChosenNum(choiceEmployee);
+                if (indexOfNum < 0) System.out.println("You have written a wrong number.");
+                else {
+                    DepartmentManager.changeDepartment(employees.get(indexOfNum));
+                    isEmployeeNumber = true;
+
+                }
+            } catch (NumberFormatException | IOException e) {
+                System.out.println("You have written not a digit.");
+            }
+
+        } while (!isEmployeeNumber);
+    }
+
+    //Ask Ordinal number of employee,raise of Position
+    private static void choiceEmployeeToRaisePosition() {
+        //Print the list of the employees with ordinal numbers
+        printListOfEmployee();
+        boolean isRaised = false;
+        do {
+            System.out.println("Write ordinal number of employee from the list: ");
+            try {
+                int numRaised = Integer.parseInt(READER.readLine());
+
+                int indexOfNum = indexOfChosenNum(numRaised);
+                if (indexOfNum < 0) System.out.println("You have written a wrong number.");
+                else {
+                    raisePosition(employees.get(indexOfNum));
+                    isRaised = true;
+                }
+            } catch (NumberFormatException | IOException e) {
+                System.out.println("You have written not a digit.");
+            }
+        } while (!isRaised);
+
+    }
+
+    //Ask Ordinal number of employee, demote of Position
+    private static void choiceEmployeeToDemotePosition() {
+                //Print the list of the employees with ordinal numbers
+        printListOfEmployee();
+        boolean isDemoted = false;
+        do {
+            System.out.println("Write ordinal number of employee from the list: ");
+            try {
+                int numDemoted = Integer.parseInt(READER.readLine());
+
+                int indexOfNum = indexOfChosenNum(numDemoted);
+                if (indexOfNum < 0) System.out.println("You have written a wrong number.");
+                else {
+                    lowerPosition(employees.get(indexOfNum));
+                    isDemoted = true;
+
+                }
+            } catch (NumberFormatException | IOException e) {
+                System.out.println("You have written not a digit.");
+            }
+        } while (!isDemoted);
+    }
+
     private static boolean isValidString(String stringToCheck) {
         String toBeCompared = "^[a-zA-Zа-яА-Я]+$";
         return Pattern.matches(toBeCompared, stringToCheck);
@@ -166,25 +235,7 @@ public class EmployeeManager {
                     }
                     // Change department of employee
                     else if (Integer.parseInt(choice) == 4) {
-                        //Print the list of the employees with ordinal numbers
-                        printListOfEmployee();
-                        boolean isEmployeeNumber = false;
-                        do {
-                            System.out.println("Write ordinal number of employee from the list ");
-                            try {
-                                int choiceEmployee = Integer.parseInt(READER.readLine());
-                                int indexOfNum = indexOfChosenNum(choiceEmployee);
-                                if (indexOfNum < 0) System.out.println("You have written a wrong number.");
-                                else {
-                                    DepartmentManager.changeDepartment(employees.get(indexOfNum));
-                                    isEmployeeNumber = true;
-
-                                }
-                            } catch (NumberFormatException e) {
-                                System.out.println("You have written not a digit.");
-                            }
-
-                        } while (!isEmployeeNumber);
+                        choiceEmployeeToChangeDepartment();
                     }
                     // Change salary of employee
                     else if (Integer.parseInt(choice) == 5) {
@@ -192,52 +243,11 @@ public class EmployeeManager {
                     }
                     //Raise of Position
                     else if (Integer.parseInt(choice) == 6) {
-                        //Print the list of the employees with ordinal numbers
-                        printListOfEmployee();
-                        boolean isRaised = false;
-                        do {
-                            System.out.println("Write ordinal number of employee from the list: ");
-                            try {
-                                int numRaised = Integer.parseInt(READER.readLine());
-
-                                int indexOfNum = indexOfChosenNum(numRaised);
-                                if (indexOfNum < 0) System.out.println("You have written a wrong number.");
-                                else {
-                                    raisePosition(employees.get(indexOfNum));
-                                    isRaised = true;
-                                }
-
-
-                            } catch (NumberFormatException e) {
-                                System.out.println("You have written not a digit.");
-                            }
-                        } while (!isRaised);
-
+                        choiceEmployeeToRaisePosition();
                     }
                     //Demotion of Position
                     else if (Integer.parseInt(choice) == 7) {
-                        //Print the list of the employees with ordinal numbers
-                        printListOfEmployee();
-                        boolean isDemoted = false;
-                        do {
-                            System.out.println("Write ordinal number of employee from the list: ");
-                            try {
-                                int numDemoted = Integer.parseInt(READER.readLine());
-
-                                int indexOfNum = indexOfChosenNum(numDemoted);
-                                if (indexOfNum < 0) System.out.println("You have written a wrong number.");
-                                else {
-                                    lowerPosition(employees.get(indexOfNum));
-                                    isDemoted = true;
-
-                                }
-
-
-                            } catch (NumberFormatException e) {
-                                System.out.println("You have written not a digit.");
-                            }
-                        } while (!isDemoted);
-
+                        choiceEmployeeToDemotePosition();
                     }
                 }
                 while (Integer.parseInt(choice) != 8);

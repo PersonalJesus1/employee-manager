@@ -26,8 +26,5 @@ public class Specialist implements Position {
         return new BigDecimal(1200);
     }
 
-    @Override
-    public boolean validateSalary(int newSalary) {
-        return newSalary >= 500 && newSalary <= 1200;
-    }
+    
 }

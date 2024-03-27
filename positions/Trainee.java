@@ -26,8 +26,5 @@ public class Trainee implements Position {
         return new BigDecimal(600);
     }
 
-    @Override
-    public boolean validateSalary(int newSalary) {
-        return newSalary >= 300 && newSalary <= 600;
-    }
+    
 }

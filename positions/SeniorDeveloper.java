@@ -26,8 +26,5 @@ public class SeniorDeveloper implements Position {
         return new BigDecimal(4000);
     }
 
-    @Override
-    public boolean validateSalary(int newSalary) {
-        return newSalary >= 1800 && newSalary <= 4000;
-    }
+    
 }

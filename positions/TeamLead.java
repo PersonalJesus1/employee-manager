@@ -26,8 +26,5 @@ public class TeamLead implements Position {
         return new BigDecimal(7000);
     }
 
-    @Override
-    public boolean validateSalary(int newSalary) {
-        return newSalary >= 2500 && newSalary <= 7000;
-    }
+    
 }

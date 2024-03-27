@@ -39,8 +39,5 @@ public class HeadOfMarketing implements Position {
         return new BigDecimal(2000);
     }
 
-    @Override
-    public boolean validateSalary(int newSalary) {
-        return newSalary>= 1000 && newSalary <= 2000;
-    }
+    
 }

@@ -1,4 +1,6 @@
-package Lessons.Employee_manager;
+package Lessons.Employee_manager.positions;
+
+import Lessons.Employee_manager.departments.Department;
 
 import java.math.BigDecimal;
 
@@ -19,8 +21,12 @@ public class MiddleDeveloper implements Position {
         return new BigDecimal(800);
     }
 
+
+
+
     @Override
     public BigDecimal getMaxSalary() {
         return new BigDecimal(2000);
     }
+    
 }

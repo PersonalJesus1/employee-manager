@@ -2,16 +2,17 @@ package Lessons.Employee_manager.departments;
 
 import Lessons.Employee_manager.Employee;
 import Lessons.Employee_manager.positions.*;
-
 import java.io.IOException;
+import java.io.Serializable;
 import java.time.LocalDate;
-
 import static Lessons.Employee_manager.Accounting.changeSalary;
 import static Lessons.Employee_manager.EmployeeManager.READER;
 import static Lessons.Employee_manager.departments.Department.*;
 import static Lessons.Employee_manager.FileManager.employees;
 
-public class DepartmentManager {
+public class DepartmentManager implements Serializable {
+    private static final long serialVersionUID = 1;
+
     public static void changeForHR(Employee employee) {
         boolean isChanged = false;
         do {
@@ -335,24 +336,24 @@ public class DepartmentManager {
         // changing position depending on the previous one
         if ("Trainee".equals(nameJobTitle))
             employee.setJobTitle(new Specialist());
-        else if ("Specialist".equals(employee.getJobTitle().getName()))
+        else if ("Specialist".equals(nameJobTitle))
             employee.setJobTitle(new HeadOfMarketing());
-        else if ("Manager".equals(employee.getJobTitle().getName()))
+        else if ("Manager".equals(nameJobTitle))
             employee.setJobTitle(new SeniorManager());
-        else if ("SeniorManager".equals(employee.getJobTitle().getName()))
+        else if ("Senior Manager".equals(nameJobTitle))
             employee.setJobTitle(new HeadOfHr());
-        else if ("JuniorDeveloper".equals(employee.getJobTitle().getName()))
+        else if ("Junior Developer".equals(nameJobTitle))
             employee.setJobTitle(new MiddleDeveloper());
-        else if ("MiddleDeveloper".equals(employee.getJobTitle().getName()))
+        else if ("Middle Developer".equals(nameJobTitle))
             employee.setJobTitle(new SeniorDeveloper());
-        else if ("SeniorDeveloper".equals(employee.getJobTitle().getName()))
+        else if ("Senior Developer".equals(nameJobTitle))
             employee.setJobTitle(new TeamLead());
         else {
             nameJobTitle = "no raise";
         }
 
         //changeSalary
-        if (nameJobTitle == "no raise") System.out.println("There is no raise for this position. ");
+        if (nameJobTitle.equals("no raise")) System.out.println("There is no raise for this position. ");
         else {
             System.out.println("Write information about salary: " + "\n" +
                     "For reference: Marketing:  1. Specialist (from 500 to 1200), 2. Head of marketing (from 1000 to 2000)" + "\n" +
@@ -370,26 +371,26 @@ public class DepartmentManager {
         // The name of title job
         String nameJobTitle = employee.getJobTitle().getName();
         // changing position depending on the previous one
-        if ( "Specialist".equals(employee.getJobTitle().getName()))
+        if ("Specialist".equals(nameJobTitle))
             employee.setJobTitle(new Trainee());
-        else if ("HeadOfMarketing".equals(employee.getJobTitle().getName()))
+        else if ("Head Of Marketing".equals(nameJobTitle))
             employee.setJobTitle(new Specialist());
-        else if ("SeniorManager".equals(employee.getJobTitle().getName()))
+        else if ("Senior Manager".equals(nameJobTitle))
             employee.setJobTitle(new Manager());
-        else if ("HeadOfHr".equals(employee.getJobTitle().getName()))
+        else if ("Head Of HR".equals(nameJobTitle))
             employee.setJobTitle(new SeniorManager());
-        else if ("MiddleDeveloper".equals(employee.getJobTitle().getName()))
+        else if ("Middle Developer".equals(nameJobTitle))
             employee.setJobTitle(new JuniorDeveloper());
-        else if ("SeniorDeveloper".equals(employee.getJobTitle().getName()))
+        else if ("Senior Developer".equals(nameJobTitle))
             employee.setJobTitle(new MiddleDeveloper());
-        else if ("TeamLead".equals(employee.getJobTitle().getName()))
+        else if ("Team Lead".equals(nameJobTitle))
             employee.setJobTitle(new SeniorDeveloper());
         else {
             nameJobTitle = "no demotion";
         }
 
         //changeSalary
-        if (nameJobTitle == "no demotion") System.out.println("There is no demotion for this position. ");
+        if (nameJobTitle.equals("no demotion")) System.out.println("There is no demotion for this position. ");
         else {
             System.out.println("For reference: Marketing:  1. Trainee (from 300 to 600), 2. Specialist (from 500 to 1200), " + "\n" +
                     "HR: 3. Manager (from 400 to 800), 4. Senior manager (from 700 to 1100)," + "\n" +
@@ -400,6 +401,5 @@ public class DepartmentManager {
             System.out.println("Information has been changed");
         }
     }
-
 }
 

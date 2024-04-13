@@ -2,9 +2,10 @@ package Lessons.Employee_manager.positions;
 
 import Lessons.Employee_manager.departments.Department;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public  interface Position {
+public  interface Position extends Serializable {
     String getName();
 
     Department getDepartment();
@@ -17,6 +18,8 @@ public  interface Position {
 
         return (getMinSalary().intValue()) <= newSalary && getMaxSalary().intValue() >= newSalary;
     }
+
+
 
 }
 

@@ -3,29 +3,32 @@ package Lessons.Employee_manager;
 import Lessons.Employee_manager.departments.DepartmentManager;
 import Lessons.Employee_manager.positions.*;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.regex.Pattern;
 
 import static Lessons.Employee_manager.Accounting.changeSalary;
 import static Lessons.Employee_manager.Accounting.chooseSalary;
-import static Lessons.Employee_manager.FileManager.addEmployee;
+import static Lessons.Employee_manager.FileManager.*;
 import static Lessons.Employee_manager.departments.DepartmentManager.*;
-import static Lessons.Employee_manager.FileManager.employees;
 
-public class EmployeeManager {
+public class EmployeeManager implements Serializable {
+
+    private static final long serialVersionUID = 1;
+
     public static final BufferedReader READER = new BufferedReader(new InputStreamReader(System.in));
 
     //Print the list of the employees
     private static void printListOfEmployee() {
         System.out.println("The list of employees: ");
         int count = 1;
-        for (Employee e : employees) {
-            System.out.println(count + " " + e);
-            count++;
+        if (employees.size() == 0) System.out.println("The list is empty ");
+        else {
+            for (Employee e : employees) {
+                System.out.println(count + " " + e);
+                count++;
+            }
         }
     }
 
@@ -57,6 +60,7 @@ public class EmployeeManager {
                     int newSalary = Integer.parseInt(READER.readLine());
                     int indexOfNum = indexOfChosenNum(ordinalNumber);
                     changeSalary(employees.get(indexOfNum), newSalary);
+                    saveEmployees(employees);
                     isChanged = true;
                 }
             } catch (NumberFormatException | IOException e) {
@@ -78,6 +82,7 @@ public class EmployeeManager {
                 if (indexOfNum < 0) System.out.println("You have written a wrong number.");
                 else {
                     DepartmentManager.changeDepartment(employees.get(indexOfNum));
+                    saveEmployees(employees);
                     isEmployeeNumber = true;
 
                 }
@@ -102,6 +107,7 @@ public class EmployeeManager {
                 if (indexOfNum < 0) System.out.println("You have written a wrong number.");
                 else {
                     raisePosition(employees.get(indexOfNum));
+                    saveEmployees(employees);
                     isRaised = true;
                 }
             } catch (NumberFormatException | IOException e) {
@@ -113,7 +119,7 @@ public class EmployeeManager {
 
     //Ask Ordinal number of employee, demote of Position
     private static void choiceEmployeeToDemotePosition() {
-                //Print the list of the employees with ordinal numbers
+        //Print the list of the employees with ordinal numbers
         printListOfEmployee();
         boolean isDemoted = false;
         do {
@@ -125,6 +131,7 @@ public class EmployeeManager {
                 if (indexOfNum < 0) System.out.println("You have written a wrong number.");
                 else {
                     lowerPosition(employees.get(indexOfNum));
+                    saveEmployees(employees);
                     isDemoted = true;
 
                 }
@@ -172,10 +179,12 @@ public class EmployeeManager {
         int ChosenSalary = chooseSalary(jobTitle);
 
         LocalDate today = LocalDate.now();
-        int lastId = employees.get(employees.size() - 1).getID() + 1;
+        int lastId;
+        if (employees.size() == 0) lastId = 1;
+        else lastId = employees.get(employees.size() - 1).getID() + 1;
         Employee employee = new Employee(name, surname, lastId, jobTitle, new BigDecimal(ChosenSalary), today);
         addEmployee(employee);
-
+        saveEmployees(employees);
         System.out.println("Information about new employee has been created.");
 
     }
@@ -187,11 +196,13 @@ public class EmployeeManager {
         do {
             System.out.println("Write ordinal number of employee from the list to delete");
             try {
+
                 int RemoveNumber = Integer.parseInt(READER.readLine());
                 int IndextOfRemoveImployee = indexOfChosenNum(RemoveNumber);
-                if (IndextOfRemoveImployee < 1) System.out.println("You have written  a wrong number.");
+                if (IndextOfRemoveImployee < 0) System.out.println("You have written  a wrong number.");
                 else {
                     FileManager.removeEmployee(employees.get(IndextOfRemoveImployee));
+                    saveEmployees(employees);
                     isRightRemoveNumber = true;
                 }
             } catch (NumberFormatException e) {
@@ -202,62 +213,57 @@ public class EmployeeManager {
 
 
     public static void main(String[] args) throws IOException {
-        Employee employee1 = new Employee("Adam", "Smith", 1, new Trainee(), new BigDecimal(400), LocalDate.of(2023, 5, 15));
-        Employee employee2 = new Employee("Joey", "Jordison", 2, new MiddleDeveloper(), new BigDecimal(1300), LocalDate.of(2022, 4, 20));
-        Employee employee3 = new Employee("Corey", "Taylor", 3, new SeniorManager(), new BigDecimal(1000), LocalDate.of(2022, 6, 21));
-        Employee employee4 = new Employee("Jim", "Root", 4, new TeamLead(), new BigDecimal(4500), LocalDate.of(2020, 3, 5));
-        employees.add(employee1);
-        employees.add(employee2);
-        employees.add(employee3);
-        employees.add(employee4);
 
-        try (READER) {
-            String choice;
-            try {
-                do {
-                    System.out.println("Write the number of the next action  (1, 2, 3, 4, 5, 6 or 7): " + "\n" +
-                            "1. Print the list of the employees 2. Write information about new employee 3. Delete information about employee " + "\n" +
-                            "4. Change department of employee 5. Change salary of employee 6. Raise of Position 7.Demotion of Position 8. Exit");
+        //get all information from file
+        employees = readEmployees();
 
-                    choice = READER.readLine();
-                    //Print the list of the employees
-                    if (Integer.parseInt(choice) == 1) {
-                        printListOfEmployee();
+             try (READER) {
+                String choice;
+                try {
+                    do {
+                        System.out.println("Write the number of the next action  (1, 2, 3, 4, 5, 6, 7 or 8): " + "\n" +
+                                "1. Print the list of the employees 2. Write information about new employee 3. Delete information about employee " + "\n" +
+                                "4. Change department of employee 5. Change salary of employee 6. Raise of Position 7.Demotion of Position 8. Exit");
 
+                        choice = READER.readLine();
+                        //Print the list of the employees
+                        if (Integer.parseInt(choice) == 1) {
+                            printListOfEmployee();
+
+                        }
+                        // Write information about new employee
+                        else if (Integer.parseInt(choice) == 2) {
+                            createEmployee();
+                        }
+                        // Delete information about employee
+                        else if (Integer.parseInt(choice) == 3) {
+                            removeEmployee();
+                        }
+                        // Change department of employee
+                        else if (Integer.parseInt(choice) == 4) {
+                            choiceEmployeeToChangeDepartment();
+                        }
+                        // Change salary of employee
+                        else if (Integer.parseInt(choice) == 5) {
+                            choiceEmployeeToChangeSalary();
+                        }
+                        //Raise of Position
+                        else if (Integer.parseInt(choice) == 6) {
+                            choiceEmployeeToRaisePosition();
+                        }
+                        //Demotion of Position
+                        else if (Integer.parseInt(choice) == 7) {
+                            choiceEmployeeToDemotePosition();
+                        } else if (Integer.parseInt(choice) == 8) {
+                            break;
+                        }
                     }
-                    // Write information about new employee
-                    else if (Integer.parseInt(choice) == 2) {
-                        createEmployee();
-                    }
-                    // Delete information about employee
-                    else if (Integer.parseInt(choice) == 3) {
-                        removeEmployee();
-                    }
-                    // Change department of employee
-                    else if (Integer.parseInt(choice) == 4) {
-                        choiceEmployeeToChangeDepartment();
-                    }
-                    // Change salary of employee
-                    else if (Integer.parseInt(choice) == 5) {
-                        choiceEmployeeToChangeSalary();
-                    }
-                    //Raise of Position
-                    else if (Integer.parseInt(choice) == 6) {
-                        choiceEmployeeToRaisePosition();
-                    }
-                    //Demotion of Position
-                    else if (Integer.parseInt(choice) == 7) {
-                        choiceEmployeeToDemotePosition();
-                    }
+                    while (Integer.parseInt(choice) < 9);
+                } catch (NumberFormatException e) {
+                    System.out.println("You have written not a digit. ");
+
                 }
-                while (Integer.parseInt(choice) != 8);
-            } catch (NumberFormatException e) {
-                System.out.println("You have written not a digit. ");
-
             }
-
-        }
-
     }
 }
 

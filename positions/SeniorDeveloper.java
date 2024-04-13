@@ -2,9 +2,11 @@ package Lessons.Employee_manager.positions;
 
 import Lessons.Employee_manager.departments.Department;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class SeniorDeveloper implements Position {
+public class SeniorDeveloper implements Position, Serializable {
+    private static final long serialVersionUID = 1;
 
     @Override
     public String getName() {
@@ -26,5 +28,5 @@ public class SeniorDeveloper implements Position {
         return new BigDecimal(4000);
     }
 
-    
+
 }

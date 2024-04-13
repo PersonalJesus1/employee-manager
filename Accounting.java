@@ -1,14 +1,14 @@
 package Lessons.Employee_manager;
 
 import Lessons.Employee_manager.positions.*;
-
 import java.io.IOException;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static Lessons.Employee_manager.EmployeeManager.READER;
 
-public class Accounting {
+public class Accounting implements Serializable {
     public static void changeSalary(Employee employee, int newSalary) throws IOException {
 
         // The name of title job

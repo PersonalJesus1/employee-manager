@@ -1,11 +1,11 @@
 package Lessons.Employee_manager;
 
 import Lessons.Employee_manager.positions.Position;
-
+import java.io.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class Employee {
+public class Employee implements Serializable  {
     private String name;
     private String surname;
     private final int ID;
@@ -13,7 +13,7 @@ public class Employee {
     private BigDecimal salary;
     private LocalDate lastChangeDate;
 
-    public Employee(String name, String surname, int ID, Position jobTitle, BigDecimal salary, LocalDate lastChangeDate) {
+    public Employee(String name, String surname, int ID, Position jobTitle, BigDecimal salary, LocalDate lastChangeDate) throws IOException {
         this.name = name;
         this.surname = surname;
         this.ID = ID;
@@ -26,10 +26,7 @@ public class Employee {
         return name;
     }
 
-    public String
-
-
-    getSurname() {
+    public String getSurname() {
         return surname;
     }
 
@@ -68,6 +65,9 @@ public class Employee {
     public void setLastChangeDate(LocalDate lastChangeDate) {
         this.lastChangeDate = lastChangeDate;
     }
+
+
+
 
     @Override
     public String toString() {

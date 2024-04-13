@@ -1,6 +1,7 @@
 package Lessons.Employee_manager;
+import java.io.Serializable;
 
-public enum Department {
+public enum Department implements Serializable {
 
     MARKETING("Marketing") {},
     HR("Human Resources") {},

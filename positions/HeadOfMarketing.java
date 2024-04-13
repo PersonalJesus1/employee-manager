@@ -2,9 +2,11 @@ package Lessons.Employee_manager.positions;
 
 import Lessons.Employee_manager.departments.Department;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class HeadOfMarketing implements Position {
+public class HeadOfMarketing implements Position, Serializable {
+    private static final long serialVersionUID = 1;
     private String title;
 
     public HeadOfMarketing(){
@@ -39,5 +41,5 @@ public class HeadOfMarketing implements Position {
         return new BigDecimal(2000);
     }
 
-    
+
 }

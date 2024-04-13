@@ -21,7 +21,7 @@ public class HeadOfMarketing implements Position {
 
     @Override
     public String getName() {
-        return "HeadOfMarketing";
+        return "Head Of Marketing";
     }
 
     @Override

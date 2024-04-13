@@ -8,7 +8,7 @@ public class JuniorDeveloper implements Position {
 
     @Override
     public String getName() {
-        return "JuniorDeveloper";
+        return "Junior Developer";
     }
 
     @Override

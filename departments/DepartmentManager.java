@@ -9,8 +9,9 @@ import java.time.LocalDate;
 
 import static Lessons.Employee_manager.Accounting.changeSalary;
 import static Lessons.Employee_manager.EmployeeManager.READER;
+import static Lessons.Employee_manager.FileManager.getEmployees;
 import static Lessons.Employee_manager.departments.Department.*;
-import static Lessons.Employee_manager.FileManager.employees;
+
 
 public class DepartmentManager implements Serializable {
     private static final long serialVersionUID = 1;
@@ -139,8 +140,8 @@ public class DepartmentManager implements Serializable {
     public static void changeDepartment(Employee employee) throws IOException {
 
         boolean isDepartChanged = false;
-        int indexOfEmployee = employees.indexOf(employee);
-        Department oldDepartment = (employees.get(indexOfEmployee).getJobTitle().getDepartment());
+        int indexOfEmployee = getEmployees().indexOf(employee);
+        Department oldDepartment = (getEmployees().get(indexOfEmployee).getJobTitle().getDepartment());
         // Choice of Department
         if (oldDepartment == MARKETING) {
             do {

@@ -23,9 +23,9 @@ public class EmployeeManager implements Serializable {
     private static void printListOfEmployee() {
         System.out.println("The list of employees: ");
         int count = 1;
-        if (employees.size() == 0) System.out.println("The list is empty ");
+        if (getEmployees().size() == 0) System.out.println("The list is empty ");
         else {
-            for (Employee e : employees) {
+            for (Employee e : getEmployees()) {
                 System.out.println(count + " " + e);
                 count++;
             }
@@ -34,7 +34,7 @@ public class EmployeeManager implements Serializable {
 
     //Get Index of Ordinal number of employee
     public static int indexOfChosenNum(int ordinalNumber) {
-        for (int i = 0; i < employees.size(); i++) {
+        for (int i = 0; i < getEmployees().size(); i++) {
             if (ordinalNumber - 1 == i) {
                 return i;
             }
@@ -49,7 +49,7 @@ public class EmployeeManager implements Serializable {
             System.out.println("Write ordinal number of employee from the list: ");
             try {
                 int ordinalNumber = Integer.parseInt(READER.readLine());
-                if (ordinalNumber > employees.size() || ordinalNumber < 1)
+                if (ordinalNumber > getEmployees().size() || ordinalNumber < 1)
                     System.out.println("You have written a wrong number.");
                 else {
 
@@ -59,8 +59,8 @@ public class EmployeeManager implements Serializable {
                             "Development: 7. Junior developer (from 400 to 1000), 8. Middle developer (from 800 to 2000), 9. Senior developer (from 1800 to 4000), 10. Team lead (from 2500 to 7000)");
                     int newSalary = Integer.parseInt(READER.readLine());
                     int indexOfNum = indexOfChosenNum(ordinalNumber);
-                    changeSalary(employees.get(indexOfNum), newSalary);
-                    saveEmployees(employees);
+                    changeSalary(getEmployees().get(indexOfNum), newSalary);
+                    saveEmployees(getEmployees());
                     isChanged = true;
                 }
             } catch (NumberFormatException | IOException e) {
@@ -81,8 +81,8 @@ public class EmployeeManager implements Serializable {
                 int indexOfNum = indexOfChosenNum(choiceEmployee);
                 if (indexOfNum < 0) System.out.println("You have written a wrong number.");
                 else {
-                    DepartmentManager.changeDepartment(employees.get(indexOfNum));
-                    saveEmployees(employees);
+                    DepartmentManager.changeDepartment(getEmployees().get(indexOfNum));
+                    saveEmployees(getEmployees());
                     isEmployeeNumber = true;
 
                 }
@@ -106,8 +106,8 @@ public class EmployeeManager implements Serializable {
                 int indexOfNum = indexOfChosenNum(numRaised);
                 if (indexOfNum < 0) System.out.println("You have written a wrong number.");
                 else {
-                    raisePosition(employees.get(indexOfNum));
-                    saveEmployees(employees);
+                    raisePosition(getEmployees().get(indexOfNum));
+                    saveEmployees(getEmployees());
                     isRaised = true;
                 }
             } catch (NumberFormatException | IOException e) {
@@ -130,8 +130,8 @@ public class EmployeeManager implements Serializable {
                 int indexOfNum = indexOfChosenNum(numDemoted);
                 if (indexOfNum < 0) System.out.println("You have written a wrong number.");
                 else {
-                    lowerPosition(employees.get(indexOfNum));
-                    saveEmployees(employees);
+                    lowerPosition(getEmployees().get(indexOfNum));
+                    saveEmployees(getEmployees());
                     isDemoted = true;
 
                 }
@@ -180,11 +180,11 @@ public class EmployeeManager implements Serializable {
 
         LocalDate today = LocalDate.now();
         int lastId;
-        if (employees.size() == 0) lastId = 1;
-        else lastId = employees.get(employees.size() - 1).getID() + 1;
+        if (getEmployees().size() == 0) lastId = 1;
+        else lastId = getEmployees().get(getEmployees().size() - 1).getID() + 1;
         Employee employee = new Employee(name, surname, lastId, jobTitle, new BigDecimal(ChosenSalary), today);
         addEmployee(employee);
-        saveEmployees(employees);
+        saveEmployees(getEmployees());
         System.out.println("Information about new employee has been created.");
 
     }
@@ -201,8 +201,8 @@ public class EmployeeManager implements Serializable {
                 int IndextOfRemoveImployee = indexOfChosenNum(RemoveNumber);
                 if (IndextOfRemoveImployee < 0) System.out.println("You have written  a wrong number.");
                 else {
-                    FileManager.removeEmployee(employees.get(IndextOfRemoveImployee));
-                    saveEmployees(employees);
+                    FileManager.removeEmployee(getEmployees().get(IndextOfRemoveImployee));
+                    saveEmployees(getEmployees());
                     isRightRemoveNumber = true;
                 }
             } catch (NumberFormatException e) {
@@ -215,55 +215,55 @@ public class EmployeeManager implements Serializable {
     public static void main(String[] args) throws IOException {
 
         //get all information from file
-        employees = readEmployees();
+        setEmployees();
 
-             try (READER) {
-                String choice;
-                try {
-                    do {
-                        System.out.println("Write the number of the next action  (1, 2, 3, 4, 5, 6, 7 or 8): " + "\n" +
-                                "1. Print the list of the employees 2. Write information about new employee 3. Delete information about employee " + "\n" +
-                                "4. Change department of employee 5. Change salary of employee 6. Raise of Position 7.Demotion of Position 8. Exit");
+        try (READER) {
+            String choice;
+            try {
+                do {
+                    System.out.println("Write the number of the next action  (1, 2, 3, 4, 5, 6, 7 or 8): " + "\n" +
+                            "1. Print the list of the employees 2. Write information about new employee 3. Delete information about employee " + "\n" +
+                            "4. Change department of employee 5. Change salary of employee 6. Raise of Position 7.Demotion of Position 8. Exit");
 
-                        choice = READER.readLine();
-                        //Print the list of the employees
-                        if (Integer.parseInt(choice) == 1) {
-                            printListOfEmployee();
+                    choice = READER.readLine();
+                    //Print the list of the employees
+                    if (Integer.parseInt(choice) == 1) {
+                        printListOfEmployee();
 
-                        }
-                        // Write information about new employee
-                        else if (Integer.parseInt(choice) == 2) {
-                            createEmployee();
-                        }
-                        // Delete information about employee
-                        else if (Integer.parseInt(choice) == 3) {
-                            removeEmployee();
-                        }
-                        // Change department of employee
-                        else if (Integer.parseInt(choice) == 4) {
-                            choiceEmployeeToChangeDepartment();
-                        }
-                        // Change salary of employee
-                        else if (Integer.parseInt(choice) == 5) {
-                            choiceEmployeeToChangeSalary();
-                        }
-                        //Raise of Position
-                        else if (Integer.parseInt(choice) == 6) {
-                            choiceEmployeeToRaisePosition();
-                        }
-                        //Demotion of Position
-                        else if (Integer.parseInt(choice) == 7) {
-                            choiceEmployeeToDemotePosition();
-                        } else if (Integer.parseInt(choice) == 8) {
-                            break;
-                        }
                     }
-                    while (Integer.parseInt(choice) < 9);
-                } catch (NumberFormatException e) {
-                    System.out.println("You have written not a digit. ");
-
+                    // Write information about new employee
+                    else if (Integer.parseInt(choice) == 2) {
+                        createEmployee();
+                    }
+                    // Delete information about employee
+                    else if (Integer.parseInt(choice) == 3) {
+                        removeEmployee();
+                    }
+                    // Change department of employee
+                    else if (Integer.parseInt(choice) == 4) {
+                        choiceEmployeeToChangeDepartment();
+                    }
+                    // Change salary of employee
+                    else if (Integer.parseInt(choice) == 5) {
+                        choiceEmployeeToChangeSalary();
+                    }
+                    //Raise of Position
+                    else if (Integer.parseInt(choice) == 6) {
+                        choiceEmployeeToRaisePosition();
+                    }
+                    //Demotion of Position
+                    else if (Integer.parseInt(choice) == 7) {
+                        choiceEmployeeToDemotePosition();
+                    } else if (Integer.parseInt(choice) == 8) {
+                        break;
+                    }
                 }
+                while (Integer.parseInt(choice) < 9);
+            } catch (NumberFormatException e) {
+                System.out.println("You have written not a digit. ");
+
             }
+        }
     }
 }
 

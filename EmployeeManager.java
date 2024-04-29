@@ -6,6 +6,8 @@ import Lessons.Employee_manager.positions.*;
 import java.io.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.regex.Pattern;
 
 import static Lessons.Employee_manager.Accounting.changeSalary;
@@ -211,8 +213,56 @@ public class EmployeeManager implements Serializable {
         } while (!isRightRemoveNumber);
     }
 
+    //print Employees by the Department
+    static class DepartmentComporator implements Comparator<Employee> {
+        public int compare(Employee e1, Employee e2) {
 
-    public static void main(String[] args) throws IOException {
+            return e1.getJobTitle().getDepartment().getTitle().compareTo(e2.getJobTitle().getDepartment().getTitle());
+        }
+    }
+
+    private static void getEmployeeByDepartment() {
+        ArrayList<Employee> employees = getEmployees();
+        employees.stream()
+                .sorted(new DepartmentComporator())
+                .forEach(e -> System.out.println(e));
+
+    }
+
+    //print Employees by the Salary
+    static class SalaryComporator implements Comparator<Employee> {
+        public int compare(Employee e1, Employee e2) {
+
+            return e1.getSalary().compareTo(e2.getSalary());
+        }
+    }
+
+    private static void getEmployeeBySalary() {
+        ArrayList<Employee> employees = getEmployees();
+        employees.stream()
+                .sorted(new SalaryComporator())
+                .forEach(e -> System.out.println(e));
+
+    }
+
+    //print Employees with the highest job title
+
+
+    private static void getEmployeeWithHighestJobTitle() {
+        ArrayList<Employee> employees = getEmployees();
+        employees.stream()
+                .filter(e ->
+                {
+                    if (e.getJobTitle().getName().equals("Head Of Marketing")
+                            || e.getJobTitle().getName().equals("Head of HR")
+                            || e.getJobTitle().getName().equals("Team Lead"))
+                        return true;
+                    else return false;
+                })
+                .forEach(e -> System.out.println(e));
+    }
+
+       public static void main(String[] args) throws IOException {
 
         //get all information from file
         setEmployees();
@@ -221,9 +271,11 @@ public class EmployeeManager implements Serializable {
             String choice;
             try {
                 do {
-                    System.out.println("Write the number of the next action  (1, 2, 3, 4, 5, 6, 7 or 8): " + "\n" +
+                    System.out.println("Write the number of the next action  (1, 2, 3, 4, 5, 6, 7, 8, 9, 10 or 11): " + "\n" +
                             "1. Print the list of the employees 2. Write information about new employee 3. Delete information about employee " + "\n" +
-                            "4. Change department of employee 5. Change salary of employee 6. Raise of Position 7.Demotion of Position 8. Exit");
+                            "4. Change department of employee 5. Change salary of employee 6. Raise of Position 7.Demotion of Position " + "\n" +
+                            "8. Print the list of employees by the Department 9.Print the list of employees by the Salary " + "\n" +
+                            "10. Print the list of employees with the highest job title 11. Exit");
 
                     choice = READER.readLine();
                     //Print the list of the employees
@@ -254,11 +306,20 @@ public class EmployeeManager implements Serializable {
                     //Demotion of Position
                     else if (Integer.parseInt(choice) == 7) {
                         choiceEmployeeToDemotePosition();
+                    //print Employees by the Department
                     } else if (Integer.parseInt(choice) == 8) {
+                        getEmployeeByDepartment();
+                    //print Employees by the Salary
+                    } else if (Integer.parseInt(choice) == 9) {
+                        getEmployeeBySalary();
+                    //print Employees with the highest job title
+                    } else if (Integer.parseInt(choice) == 10) {
+                        getEmployeeWithHighestJobTitle();
+                    } else if (Integer.parseInt(choice) == 11) {
                         break;
                     }
                 }
-                while (Integer.parseInt(choice) < 9);
+                while (Integer.parseInt(choice) < 12);
             } catch (NumberFormatException e) {
                 System.out.println("You have written not a digit. ");
 

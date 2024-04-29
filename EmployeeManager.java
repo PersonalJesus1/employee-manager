@@ -7,7 +7,6 @@ import java.io.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.regex.Pattern;
 
 import static Lessons.Employee_manager.Accounting.changeSalary;
@@ -214,39 +213,24 @@ public class EmployeeManager implements Serializable {
     }
 
     //print Employees by the Department
-    static class DepartmentComporator implements Comparator<Employee> {
-        public int compare(Employee e1, Employee e2) {
-
-            return e1.getJobTitle().getDepartment().getTitle().compareTo(e2.getJobTitle().getDepartment().getTitle());
-        }
-    }
-
     private static void getEmployeeByDepartment() {
         ArrayList<Employee> employees = getEmployees();
         employees.stream()
-                .sorted(new DepartmentComporator())
-                .forEach(e -> System.out.println(e));
+                .sorted(new Comparators.DepartmentComparator())
+                .forEach(System.out::println);
 
     }
 
     //print Employees by the Salary
-    static class SalaryComporator implements Comparator<Employee> {
-        public int compare(Employee e1, Employee e2) {
-
-            return e1.getSalary().compareTo(e2.getSalary());
-        }
-    }
-
     private static void getEmployeeBySalary() {
         ArrayList<Employee> employees = getEmployees();
         employees.stream()
-                .sorted(new SalaryComporator())
-                .forEach(e -> System.out.println(e));
+                .sorted(new Comparators.SalaryComparator())
+                .forEach(System.out::println);
 
     }
 
     //print Employees with the highest job title
-
 
     private static void getEmployeeWithHighestJobTitle() {
         ArrayList<Employee> employees = getEmployees();
